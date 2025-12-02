@@ -1,5 +1,49 @@
-Investment Portfolio Tracker DashboardThis is a simple, single-file HTML and JavaScript application designed to help users track transactions for investments, particularly those involving small units of measure (e.g., milligrams of a commodity).The dashboard uses the First-In, First-Out (FIFO) accounting method to accurately calculate the realized Profit & Loss (P&L) when assets are sold. All data is processed client-side and can be loaded from or saved to a local CSV file.FeaturesSingle-File Application: Easy to run—just open dashboard.html in your browser.Client-Side Data: All data management is done locally via CSV files (no database required).FIFO Calculation: Automatically calculates the Cost of Goods Sold (COGS) and Realized P&L for "Sell" transactions using the FIFO method.Tax Handling: Automatically separates the 3% tax from the total paid amount for "Buy" transactions.Visualization: Displays a time-series chart of price per milligram (Price/mg).Summary Metrics: Provides key figures like Total Investment, Total Revenue, Total Realized P&L, and Current Balance Weight.Getting StartedClone or download this repository.Open the dashboard.html file in any modern web browser.Start by adding transactions using the "Add New Transaction" form or load existing data using the "Load Transactions (CSV)" button.Expected CSV File FormatThe application strictly expects 7 fields in the CSV file, in the exact order listed below. These fields represent the raw, fundamental data required for the FIFO calculation and reporting.HeaderDescriptionRequired for TypeCalculation NotesDateThe date the transaction occurred (e.g., DD/MM/YYYY).AllMust be a valid date string.TypeThe nature of the transaction.AllMust be exactly Buy or Sell.SpentThe Base Cost of the purchase (pre-tax amount).BuyFor Buy, this is Total Paid / 1.03. For Sell, it must be 0.00.ReceivedThe total revenue generated from the sale.SellFor Sell, this is the amount received. For Buy, it must be 0.00.TaxThe tax amount paid (3% of the total amount).BuyFor Buy, this is Total Paid - Spent. For Sell, it must be 0.00.WeightThe quantity of the asset transacted, in milligrams (mg).AllMust be a positive numeric value.COGSBasisThe calculated Cost of Goods Sold (COGS) used for the sale.SellFor Sell, this is the original cost of the units being sold (calculated via FIFO). For Buy, it must be 0.00.Example CSV DataDate,Type,Spent,Received,Tax,Weight,COGSBasis
+# Investment Portfolio Tracker Dashboard
+
+A simple, single-file HTML + JavaScript application to track investment transactions measured in small units (e.g., milligrams). The dashboard runs entirely client-side, supports CSV import/export, and uses the **FIFO** method to compute realized Profit & Loss (P&L) for sell transactions.
+
+## Features
+- **Single-file application** — open `dashboard.html` in a modern browser to run.
+- **Client-side storage** — load/save transactions from/to a local CSV file (no server or database).
+- **FIFO accounting** — Cost of Goods Sold (COGS) and realized P&L for sells are calculated using FIFO.
+- **Automatic tax handling** — Buy transactions separate a 3% tax from the total paid amount.
+- **Visualization** — time-series chart of price per milligram (Price/mg).
+- **Summary metrics** — Total Investment, Total Revenue, Total Realized P&L, Current Balance Weight.
+
+## Getting Started
+1. Clone or download this repository.
+2. Open `dashboard.html` in any modern web browser.
+3. Add transactions using the **Add New Transaction** form or load an existing CSV via **Load Transactions (CSV)**.
+4. Export transactions to CSV when you need to save or transfer data.
+
+## Expected CSV File Format
+
+The application expects exactly **7 fields** in the CSV, in this order. These are the raw attributes required for FIFO calculations and reporting.
+
+| Header    | Description                                                                 | Required for Type | Calculation Notes |
+|-----------|-----------------------------------------------------------------------------|-------------------|-------------------|
+| `Date`    | Date of the transaction (e.g., `DD/MM/YYYY`)                                | All               | Must be a valid date string. |
+| `Type`    | Transaction type                                                            | All               | Must be exactly `Buy` or `Sell`. |
+| `Spent`   | Base cost of the purchase (pre-tax amount)                                  | Buy               | For Buy: `Total Paid / 1.03`. For Sell: `0.00`. |
+| `Received`| Total revenue received from the sale                                        | Sell              | For Sell: amount received. For Buy: `0.00`. |
+| `Tax`     | Tax amount (3% of total paid)                                               | Buy               | For Buy: `Total Paid - Spent`. For Sell: `0.00`. |
+| `Weight`  | Quantity transacted in **milligrams (mg)**                                  | All               | Must be a positive numeric value. |
+| `COGSBasis`| Calculated COGS used for the sale (original cost of sold units via FIFO)   | Sell              | For Sell: computed from prior Buy records using FIFO. For Buy: `0.00`. |
+
+### Notes on CSV usage
+- The CSV must contain the header row exactly as shown above.
+- All numeric fields use decimal notation (e.g., `194.17`, `0.00`).
+- Date strings must follow the `DD/MM/YYYY` format (or another format your browser/locale can reliably parse).
+
+## Example CSV Data
+Date,Type,Spent,Received,Tax,Weight,COGSBasis
 15/06/2019,Buy,194.17,0.00,5.83,56.70,0.00
 17/06/2019,Buy,194.17,0.00,5.83,56.80,0.00
 15/11/2020,Sell,0.00,10.19,0.00,2.00,7.05
-Note: When using the dashboard's "Add New Transaction" form, you enter the Total Paid/Received Amount. The application automatically calculates and populates the Spent, Tax, Received, and COGSBasis fields before saving to the CSV format.
+
+## How fields are derived when using the UI
+When adding a transaction through the dashboard form you enter the **Total Paid** (for Buys) or **Total Received** (for Sells). The application will:
+- For **Buy**: compute `Spent = Total Paid / 1.03`, `Tax = Total Paid - Spent`, set `Received = 0.00`, `COGSBasis = 0.00`.
+- For **Sell**: set `Spent = 0.00`, `Tax = 0.00`, compute `COGSBasis` by consuming prior Buy records using FIFO to determine the original cost of the sold units; `Received` is set to the amount entered.
+
+
