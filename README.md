@@ -1,6 +1,6 @@
 # Investment Portfolio Tracker Dashboard
 
-A simple, single-file HTML + JavaScript application to track investment transactions measured in small units (e.g., milligrams). The dashboard runs entirely client-side, supports CSV import/export, and uses the **FIFO** method to compute realized Profit & Loss (P&L) for sell transactions.
+A simple, single-file HTML + JavaScript application to track investment transactions measured in small units (e.g., milligrams of gold). The dashboard runs entirely client-side, supports CSV import/export, and uses the **FIFO** method to compute realized Profit & Loss (P&L) for sell transactions.
 
 ## Features
 - **Single-file application** — open `investment_tracker.html` in a modern browser to run.
