@@ -3,7 +3,7 @@
 A simple, single-file HTML + JavaScript application to track investment transactions measured in small units (e.g., milligrams). The dashboard runs entirely client-side, supports CSV import/export, and uses the **FIFO** method to compute realized Profit & Loss (P&L) for sell transactions.
 
 ## Features
-- **Single-file application** — open `dashboard.html` in a modern browser to run.
+- **Single-file application** — open `investment_tracker.html` in a modern browser to run.
 - **Client-side storage** — load/save transactions from/to a local CSV file (no server or database).
 - **FIFO accounting** — Cost of Goods Sold (COGS) and realized P&L for sells are calculated using FIFO.
 - **Automatic tax handling** — Buy transactions separate a 3% tax from the total paid amount.
